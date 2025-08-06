@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const api = axios.create({
-  baseURL: "http://localhost:8000/api", // ajuste para sua URL real
+  baseURL: "https://myfinances.infinityfreeapp.com/api",
   headers: {
     "Content-Type": "application/json",
   },
