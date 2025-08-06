@@ -22,12 +22,15 @@ a:hover {
   color: #535bf2;
 }
 
+.container {
+  max-width: 1280px;
+}
+
 body {
   margin: 0;
-  display: flex;
-  place-items: center;
-  min-width: 320px;
-  min-height: 100vh;
+  padding: 0;
+  width: 100%;
+  height: 100%;
 }
 
 h1 {
@@ -37,7 +40,6 @@ h1 {
 
 button {
   border-radius: 8px;
-  border: 1px solid transparent;
   padding: 0.6em 1.2em;
   font-size: 1em;
   font-weight: 500;
@@ -59,10 +61,12 @@ button:focus-visible {
 }
 
 #app {
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 2rem;
-  text-align: center;
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -76,4 +80,14 @@ button:focus-visible {
   button {
     background-color: #080e1b;
   }
+}
+
+/* Fundo do toast */
+.Toastify__toast {
+  background-color: #5f5e5ec7 !important;
+  color: white !important;
+}
+
+.Toastify__toast-body {
+  font-size: 14px !important;
 }
