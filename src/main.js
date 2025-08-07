@@ -8,7 +8,7 @@ import "vue3-toastify/dist/index.css";
 export function verifyToken(err) {
   if (err.response?.data?.message?.toLowerCase().includes("expirado")) {
     localStorage.removeItem("token");
-    sessionStorage.removeItem("user");
+    localStorage.removeItem("user");
   }
 }
 
