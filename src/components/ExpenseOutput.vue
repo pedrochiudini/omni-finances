@@ -149,11 +149,11 @@ async function saveExpense() {
             <div class="recent-expenses">
                 <h3>Gastos Recentes</h3>
 
-                <div>
+                <div v-if="!dashboard.latestExpeses">
                     <p class="no-expenses">Nenhuma despesa encontrada.</p>
                 </div>
 
-                <div v-for="(expense, index) in dashboard.latestExpeses" :key="index">
+                <div v-else v-for="(expense, index) in dashboard.latestExpeses" :key="index">
                     <LatestExpense :title="dashboard.getTitle(index)"
                         :dateExpense="formatarData(expense['reference_month'])"
                         :value="formatarValor(expense['amount'])" :icon="dashboard.getIcon(index)"
