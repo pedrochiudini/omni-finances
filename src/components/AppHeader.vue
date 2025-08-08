@@ -1,13 +1,33 @@
 <script setup>
+import { useAuthStore } from '../stores/auth';
 
+const auth = useAuthStore();
+
+function hadleLogout() {
+    auth.logout();
+}
 </script>
 
 <template>
     <header class="navbar">
-        <div class="container">
+        <div class="containers container">
             <div class="logo">
                 <img src="../assets/logo.svg" alt="Logo" />
                 <span>MyFinances</span>
+            </div>
+            <div :onclick="hadleLogout" class="logout">
+                <!-- Logout icon (outline) - use `color` or CSS classes to change the color -->
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" aria-hidden="false"
+                    role="img">
+                    <title>Logout</title>
+                    <g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <!-- "porta" -->
+                        <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4" />
+                        <path d="M16 17l5-5-5-5" />
+                        <path d="M21 12H9" />
+                    </g>
+                </svg>
             </div>
         </div>
     </header>
@@ -20,6 +40,15 @@
     align-items: center;
     justify-content: center;
     padding: 2rem 0;
+    width: 100%;
+}
+
+.containers {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    height: 100%;
 }
 
 .logo {
@@ -55,13 +84,12 @@ span {
     color: #007bff;
 }
 
+.logout {
+    cursor: pointer;
+}
+
 /* Responsividade */
 @media (max-width: 768px) {
-    .container {
-        flex-direction: column;
-        align-items: flex-start;
-    }
-
     .nav-links {
         margin-top: 0.5rem;
         width: 100%;

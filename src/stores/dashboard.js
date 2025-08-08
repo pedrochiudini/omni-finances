@@ -3,6 +3,10 @@ import { verifyToken } from "../main";
 import { toast } from "vue3-toastify";
 import api from "../api";
 
+import iconFixo from "../assets/casa.svg";
+import iconDesejo from "../assets/compra.png";
+import iconPoupanca from "../assets/dolar.png";
+
 export const useDashboardStore = defineStore("dashboard", {
   state: () => ({
     goalValueFixo: 0,
@@ -21,7 +25,35 @@ export const useDashboardStore = defineStore("dashboard", {
     totalExpenses: 0,
     totalSavings: 0,
     balance: 0,
+
+    latestExpeses: [],
   }),
+  getters: {
+    getTitle: (state) => (index) => {
+      switch (state.latestExpeses[index]["category"]) {
+        case "FI":
+          return "Fixo";
+
+        case "DE":
+          return "Desejo";
+
+        case "PO":
+          return "Poupança";
+      }
+    },
+    getIcon: (state) => (index) => {
+      switch (state.latestExpeses[index]["category"]) {
+        case "FI":
+          return iconFixo;
+
+        case "DE":
+          return iconDesejo;
+
+        case "PO":
+          return iconPoupanca;
+      }
+    },
+  },
   actions: {
     async carregarDashboard() {
       try {
@@ -44,6 +76,8 @@ export const useDashboardStore = defineStore("dashboard", {
         this.totalExpenses = data["total_amount_expenses"];
         this.totalSavings = data["expenses_by_category"]["PO"];
         this.balance = data["balance"];
+
+        this.latestExpeses = data["latest_expenses"];
       } catch (err) {
         if (err.response?.data?.message) {
           verifyToken(err);

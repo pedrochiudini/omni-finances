@@ -5,12 +5,40 @@ import { useDashboardStore } from '../stores/dashboard';
 import api from '../api';
 import { toast } from "vue3-toastify";
 import { now } from '../main';
+import LatestExpense from './LatestExpense.vue';
 
 const auth = useAuthStore();
 const dashboard = useDashboardStore();
 
-const expense = ref('0,00')
-const category = ref('')
+const expense = ref('0,00');
+const category = ref('');
+
+function formatarValor(valor) {
+    const numero = Number(valor);
+
+    if (isNaN(numero)) {
+        return '0,00';
+    }
+
+    return Number(valor).toLocaleString('pt-BR', {
+        minimumFractionDigits: 2,
+        maximumFractionDigits: 2,
+    });
+}
+
+function formatarData(data) {
+    const date = new Date(data)
+
+    if (isNaN(date)) {
+        return '';
+    }
+
+    return date.toLocaleDateString('pt-BR', {
+        day: '2-digit',
+        month: '2-digit',
+        year: 'numeric'
+    })
+}
 
 function allowOnlyNumbers(e) {
     const isNumber = /^[0-9]$/.test(e.key)
@@ -120,7 +148,17 @@ async function saveExpense() {
 
             <div class="recent-expenses">
                 <h3>Gastos Recentes</h3>
-                <p class="no-expenses">Em breve aqui gastos recentes</p>
+
+                <div>
+                    <p class="no-expenses">Nenhuma despesa encontrada.</p>
+                </div>
+
+                <div v-for="(expense, index) in dashboard.latestExpeses" :key="index">
+                    <LatestExpense :title="dashboard.getTitle(index)"
+                        :dateExpense="formatarData(expense['reference_month'])"
+                        :value="formatarValor(expense['amount'])" :icon="dashboard.getIcon(index)"
+                        bgColorClass="bg-orange" textColorClass="text-orange" />
+                </div>
             </div>
         </div>
     </div>
